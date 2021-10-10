@@ -28,6 +28,7 @@ COPY . /app
 
 RUN bundle --version
 
+RUN npm install
 RUN bundle check || bundle install
 RUN bundle exec rails assets:precompile
 RUN bundle exec rails webpacker:compile
