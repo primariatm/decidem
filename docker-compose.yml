@@ -44,7 +44,11 @@ services:
       - '443:443'
     volumes:
       - static-files:/srv
+      - caddy-data:/data
+      - caddy-config:/config
 
 volumes:
   static-files: {}
   redis-data: {}
+  caddy-data: {}
+  caddy-config: {}
