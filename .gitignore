@@ -36,6 +36,7 @@
 # Ignore public uploads
 /public/uploads
 /public/packs
+/public/decidim-packs
 /public/packs-test
 /yarn-error.log
 yarn-debug.log*
@@ -43,3 +44,10 @@ yarn-debug.log*
 /node_modules
 .env
 .DS_Store
+
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
