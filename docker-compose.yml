@@ -1,0 +1,48 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        UID: ${UID}
+        GID: ${GID}
+    user: "${UID}:${GID}"
+    restart: always
+    environment:
+      - PORT=3000
+      - RAILS_ENV=production
+      - RAILS_LOG_TO_STDOUT=true
+      - RAILS_SERVE_STATIC_FILES=false
+      - DATABASE_URL=${DATABASE_URL}
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+    volumes:
+      - static-files:/app/public
+    ports:
+      - 3000:3000
+    links:
+      - redis
+      - caddy
+
+  redis:
+    image: redis
+    volumes:
+      - redis-data:/data
+
+  caddy:
+    build:
+      context: caddy
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      DOMAIN_NAME: ${DOMAIN_NAME}
+      CLOUDFLARE_API_TOKEN: ${DOMAIN_NAME}
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - static-files:/srv
+
+volumes:
+  static-files: {}
+  redis-data: {}
