@@ -16,12 +16,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       run: |
-        docker build .
-          --file Dockerfile
-          --tag decidem:$(date "+%d%m%y_%H%M")
-          --tag decidem:latest
-          --build-arg UID=${{ secrets.UID }}
-          --build-arg GID=${{ secrets.GID }}
+        docker build . --file Dockerfile --tag primariatm/decidem:$(date "+%d%m%y_%H%M") --tag primariatm/decidem:latest --build-arg UID=${{ secrets.UID }} --build-arg GID=${{ secrets.GID }}
     - name: Push the Docker image
       run: |
         docker push ghcr.io/primariatm/decidem --all-tags
