@@ -14,6 +14,7 @@ services:
       - RAILS_ENV=production
       - RAILS_LOG_TO_STDOUT=true
       - RAILS_SERVE_STATIC_FILES=false
+      - REDIS_URL=redis://redis:6379/1
       - DATABASE_URL=${DATABASE_URL}
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
     volumes:
@@ -37,6 +38,7 @@ services:
     environment:
       DOMAIN_NAME: ${DOMAIN_NAME}
       CLOUDFLARE_API_TOKEN: ${DOMAIN_NAME}
+      PROXY_ADDRESS: app:3000
     ports:
       - '80:80'
       - '443:443'

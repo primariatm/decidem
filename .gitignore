@@ -34,8 +34,12 @@
 /config/master.key
 
 # Ignore public uploads
-public/uploads
-
+/public/uploads
+/public/packs
+/public/packs-test
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
 /node_modules
 .env
 .DS_Store
