@@ -1,4 +1,9 @@
+{
+  admin off
+}
+
 {$DOMAIN_NAME:localhost} {
+  header -Server
   reverse_proxy {$PROXY_ADDRESS}
   root * /srv
 }
