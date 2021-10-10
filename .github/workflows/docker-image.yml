@@ -15,4 +15,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag decidem:$(date "+%d%m%y_%H%M") --tag decidem:latest
+      run: |
+        docker build .
+          --file Dockerfile
+          --tag decidem:$(date "+%d%m%y_%H%M")
+          --tag decidem:latest
+          --build-arg UID=$UID
+          --build-arg GID=$GID
+    - name: Push the Docker image
+      run: |
+        docker push ghcr.io/primariatm/decidem --all-tags
