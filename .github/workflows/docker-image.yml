@@ -9,14 +9,16 @@ on:
 jobs:
 
   build:
-
     runs-on: ubuntu-latest
+
+    env:
+      IMAGE: ghcr.io/primariatm/decidem
 
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       run: |
-        docker build . --file Dockerfile --tag primariatm/decidem:$(date "+%d%m%y_%H%M") --tag primariatm/decidem:latest --build-arg UID=${{ secrets.UID }} --build-arg GID=${{ secrets.GID }}
+        docker build . --file Dockerfile --tag ${IMAGE}:$(date "+%d%m%y_%H%M") --tag ${IMAGE}:latest --build-arg UID=${{ secrets.UID }} --build-arg GID=${{ secrets.GID }}
     - name: Push the Docker image
       run: |
-        docker push ghcr.io/primariatm/decidem --all-tags
+        docker push ${IMAGE} --all-tags
