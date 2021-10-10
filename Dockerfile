@@ -7,10 +7,13 @@ ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
 ENV BUNDLER_VERSION 2.2.18
+ENV NODE_VERSION 16.9.1
 
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
-RUN apt-get install -y nodejs
-RUN npm install -g yarn
+RUN apt update
+RUN apt install -y nodejs
+RUN npm install -g yarn n
+RUN n $NODE_VERSION
 
 RUN echo 'gem: --no-rdoc --no-ri' >> "/etc/gemrc"
 RUN gem install bundler --version $BUNDLER_VERSION
@@ -26,10 +29,8 @@ COPY . /app
 RUN bundle --version
 
 RUN bundle check || bundle install
-RUN bundle exec rails webpacker:install
-RUN bundle exec rails decidim:webpacker:install
-RUN bundle exec rails webpacker:compile
 RUN bundle exec rails assets:precompile
+RUN bundle exec rails webpacker:compile
 
 RUN chown -R decidem:decidem /app
 USER $UID

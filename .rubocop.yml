@@ -1,6 +1,7 @@
 AllCops:
   Exclude:
     - 'db/**/*'
+    - 'bin/*'
 
 inherit_gem:
   rubocop-shopify: rubocop.yml
