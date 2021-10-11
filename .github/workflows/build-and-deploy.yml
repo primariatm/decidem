@@ -10,9 +10,36 @@ env:
   IMAGE: ghcr.io/primariatm/decidem
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build the Docker image
+      run: |
+        docker build . \
+          --build-arg UID=${{ secrets.UID }} \
+          --build-arg GID=${{ secrets.GID }} \
+          --tag ${IMAGE}:$(date "+%d%m%y_%H%M") \
+          --tag ${IMAGE}:${{ github.sha }} \
+          --tag ${IMAGE}:latest
+
+    - name: Log in to registry
+      run: |
+        echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+    - name: Push the Docker image
+      run: |
+        docker push ${IMAGE} --all-tags
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
     permissions:
       packages: read
 
@@ -29,30 +56,3 @@ jobs:
           cd /home/decidem/app
           docker-compose pull app
           docker-compose up -d
-
-  # build:
-  #   runs-on: ubuntu-latest
-
-  #   permissions:
-  #     contents: read
-  #     packages: write
-
-  #   steps:
-  #   - uses: actions/checkout@v2
-
-  #   - name: Build the Docker image
-  #     run: |
-  #       docker build . \
-  #         --build-arg UID=${{ secrets.UID }} \
-  #         --build-arg GID=${{ secrets.GID }} \
-  #         --tag ${IMAGE}:$(date "+%d%m%y_%H%M") \
-  #         --tag ${IMAGE}:${{ github.sha }} \
-  #         --tag ${IMAGE}:latest
-
-  #   - name: Log in to registry
-  #     run: |
-  #       echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
-  #   - name: Push the Docker image
-  #     run: |
-  #       docker push ${IMAGE} --all-tags
