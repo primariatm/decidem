@@ -16,6 +16,7 @@ jobs:
 
     env:
       IMAGE: ghcr.io/primariatm/decidem
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
     - uses: actions/checkout@v2
