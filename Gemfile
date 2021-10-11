@@ -12,6 +12,8 @@ gem "decidim", "0.25.0"
 # gem "decidim-initiatives", "0.25.0"
 # gem "decidim-templates", "0.25.0"
 
+gem 'sidekiq'
+
 gem "bootsnap", "~> 1.3"
 
 gem "puma", ">= 5.0.0"
