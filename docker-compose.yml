@@ -12,6 +12,10 @@ services:
       - REDIS_URL=redis://redis:6379/1
       - DATABASE_URL=${DATABASE_URL}
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SMTP_DOMAIN=${SMTP_DOMAIN}
+      - SMTP_ADDRESS=${SMTP_ADDRESS}
     volumes:
       - static-files:/app/public
     ports:
