@@ -6,16 +6,38 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  IMAGE: ghcr.io/primariatm/decidem
+
 jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      packages: read
+
+    steps:
+    - name: Log in to registry
+      run: |
+        echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+    - name: Deploy to production
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        username: ${{ secrets.DEPLOY_USERNAME }}
+        key: ${{ secrets.DEPLOY_KEY }}
+        script: |
+          cd /home/decidem/app
+          docker-compose pull ${IMAGE}:latest
+          docker-compose up -d
+
   build:
     runs-on: ubuntu-latest
 
     permissions:
       contents: read
       packages: write
-
-    env:
-      IMAGE: ghcr.io/primariatm/decidem
 
     steps:
     - uses: actions/checkout@v2
