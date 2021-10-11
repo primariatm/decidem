@@ -16,7 +16,6 @@ jobs:
 
     env:
       IMAGE: ghcr.io/primariatm/decidem
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
     - uses: actions/checkout@v2
@@ -27,7 +26,12 @@ jobs:
           --build-arg UID=${{ secrets.UID }} \
           --build-arg GID=${{ secrets.GID }} \
           --tag ${IMAGE}:$(date "+%d%m%y_%H%M") \
+          --tag ${IMAGE}:${{ github.sha }}
           --tag ${IMAGE}:latest
+
+    - name: Log in to registry
+      run: |
+        echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
     - name: Push the Docker image
       run: |
