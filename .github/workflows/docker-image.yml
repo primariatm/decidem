@@ -26,7 +26,7 @@ jobs:
           --build-arg UID=${{ secrets.UID }} \
           --build-arg GID=${{ secrets.GID }} \
           --tag ${IMAGE}:$(date "+%d%m%y_%H%M") \
-          --tag ${IMAGE}:${{ github.sha }}
+          --tag ${IMAGE}:${{ github.sha }} \
           --tag ${IMAGE}:latest
 
     - name: Log in to registry
