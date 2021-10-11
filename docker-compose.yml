@@ -24,6 +24,17 @@ services:
       - redis
       - caddy
 
+  worker:
+    image: ghcr.io/primariatm/decidem:latest
+    environment:
+      - RAILS_ENV=production
+      - REDIS_URL=redis://redis:6379/1
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=redis://redis:6379
+    links:
+      - redis
+    command: bundle exec sidekiq
+
   redis:
     image: redis
     volumes:
