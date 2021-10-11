@@ -7,6 +7,8 @@ on:
     branches: [ master ]
 
 jobs:
+  permissions:
+    packages: write
 
   build:
     runs-on: ubuntu-latest
@@ -16,9 +18,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Build the Docker image
       run: |
-        docker build . --file Dockerfile --tag ${IMAGE}:$(date "+%d%m%y_%H%M") --tag ${IMAGE}:latest --build-arg UID=${{ secrets.UID }} --build-arg GID=${{ secrets.GID }}
+        docker build . \
+          --build-arg UID=${{ secrets.UID }} \
+          --build-arg GID=${{ secrets.GID }} \
+          --tag ${IMAGE}:$(date "+%d%m%y_%H%M") \
+          --tag ${IMAGE}:latest
+
     - name: Push the Docker image
       run: |
         docker push ${IMAGE} --all-tags
