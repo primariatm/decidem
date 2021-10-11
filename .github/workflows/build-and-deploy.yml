@@ -27,9 +27,10 @@ jobs:
         host: ${{ secrets.DEPLOY_HOST }}
         username: ${{ secrets.DEPLOY_USER }}
         key: ${{ secrets.DEPLOY_KEY }}
+        envs: IMAGE
         script: |
           cd /home/decidem/app
-          docker-compose pull ${IMAGE}:latest
+          docker-compose pull $IMAGE:latest
           docker-compose up -d
 
   # build:
