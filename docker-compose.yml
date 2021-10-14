@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   app:
     image: ghcr.io/primariatm/decidem:latest
@@ -30,6 +30,7 @@ services:
       - RAILS_ENV=production
       - REDIS_URL=redis://redis:6379/1
       - DATABASE_URL=${DATABASE_URL}
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
       - REDIS_URL=redis://redis:6379
     links:
       - redis
@@ -50,8 +51,8 @@ services:
       CLOUDFLARE_API_TOKEN: ${DOMAIN_NAME}
       PROXY_ADDRESS: app:3000
     ports:
-      - '80:80'
-      - '443:443'
+      - "80:80"
+      - "443:443"
     volumes:
       - static-files:/srv
       - caddy-data:/data
