@@ -5,7 +5,7 @@ Decidim.configure do |config|
   config.application_name = "Decidem"
 
   # The email that will be used as sender in all emails from Decidim
-  config.mailer_sender = "change-me@example.org"
+  config.mailer_sender = ENV["FROM_ADDRESS"]
 
   # Sets the list of available locales for the whole application.
   #
