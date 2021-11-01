@@ -18,6 +18,7 @@ services:
       - SMTP_ADDRESS=${SMTP_ADDRESS}
       - FROM_ADDRESS=${FROM_ADDRESS}
     volumes:
+      - uploads:/app/public/uploads
       - static-files:/app/public
     ports:
       - 3000:3000
@@ -38,6 +39,8 @@ services:
       - SMTP_PASSWORD=${SMTP_PASSWORD}
       - SMTP_ADDRESS=${SMTP_ADDRESS}
       - FROM_ADDRESS=${FROM_ADDRESS}
+    volumes:
+      - uploads:/app/public/uploads
     links:
       - redis
     command: bundle exec sidekiq
@@ -65,6 +68,7 @@ services:
       - caddy-config:/config
 
 volumes:
+  uploads: {}
   static-files: {}
   redis-data: {}
   caddy-data: {}
