@@ -43,5 +43,10 @@ group :development do
   gem "rubocop-performance", require: false
 end
 
+group :production do
+  gem "sentry-ruby"
+  gem "sentry-rails"
+end
+
 gem "dotenv"
 gem "dotenv-rails", groups: [:development, :test]
