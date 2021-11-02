@@ -7,7 +7,6 @@ services:
     environment:
       - PORT=3000
       - RAILS_ENV=production
-      - RAILS_LOG_TO_STDOUT=true
       - RAILS_SERVE_STATIC_FILES=false
       - REDIS_URL=redis://redis:6379/1
       - DATABASE_URL=${DATABASE_URL}
@@ -18,6 +17,7 @@ services:
       - SMTP_ADDRESS=${SMTP_ADDRESS}
       - FROM_ADDRESS=${FROM_ADDRESS}
     volumes:
+      - logs:/log
       - storage:/app/storage
       - static-files:/app/public
     ports:
@@ -30,7 +30,6 @@ services:
     image: ghcr.io/primariatm/decidem:latest
     environment:
       - RAILS_ENV=production
-      - RAILS_LOG_TO_STDOUT=true
       - REDIS_URL=redis://redis:6379/1
       - DATABASE_URL=${DATABASE_URL}
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
@@ -40,6 +39,7 @@ services:
       - SMTP_ADDRESS=${SMTP_ADDRESS}
       - FROM_ADDRESS=${FROM_ADDRESS}
     volumes:
+      - logs:/log
       - storage:/app/storage
     links:
       - redis
@@ -69,7 +69,8 @@ services:
       - caddy-config:/config
 
 volumes:
-  uploads: {}
+  storage: {}
+  logs: {}
   static-files: {}
   redis-data: {}
   caddy-data: {}
