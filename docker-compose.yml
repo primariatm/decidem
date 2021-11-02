@@ -17,7 +17,7 @@ services:
       - SMTP_ADDRESS=${SMTP_ADDRESS}
       - FROM_ADDRESS=${FROM_ADDRESS}
     volumes:
-      - logs:/log
+      - logs:/app/log
       - storage:/app/storage
       - static-files:/app/public
     ports:
@@ -39,7 +39,7 @@ services:
       - SMTP_ADDRESS=${SMTP_ADDRESS}
       - FROM_ADDRESS=${FROM_ADDRESS}
     volumes:
-      - logs:/log
+      - logs:/app/log
       - storage:/app/storage
     links:
       - redis
