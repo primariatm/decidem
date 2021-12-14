@@ -16,7 +16,8 @@ services:
       - SMTP_PASSWORD=${SMTP_PASSWORD}
       - SMTP_ADDRESS=${SMTP_ADDRESS}
       - FROM_ADDRESS=${FROM_ADDRESS}
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_BACKEND_DSN=${SENTRY_BACKEND_DSN}
+      - SENTRY_FRONTEND_DSN=${SENTRY_FRONTEND_DSN}
     volumes:
       - logs:/app/log
       - storage:/app/storage
@@ -39,7 +40,8 @@ services:
       - SMTP_PASSWORD=${SMTP_PASSWORD}
       - SMTP_ADDRESS=${SMTP_ADDRESS}
       - FROM_ADDRESS=${FROM_ADDRESS}
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_BACKEND_DSN=${SENTRY_BACKEND_DSN}
+      - SENTRY_FRONTEND_DSN=${SENTRY_FRONTEND_DSN}
     volumes:
       - logs:/app/log
       - storage:/app/storage

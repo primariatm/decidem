@@ -164,7 +164,7 @@
 
 <%# if Rails.env.production? %>
   <script type='text/javascript'>
-    window.SENTRY_DSN = "<%= ENV["SENTRY_FRONTEND_DSN"] %>"
+    window.SENTRY_FRONTEND_DSN = "<%= ENV["SENTRY_FRONTEND_DSN"] %>"
   </script>
   <%= javascript_pack_tag "error_tracking" %>
 <%# end %>
