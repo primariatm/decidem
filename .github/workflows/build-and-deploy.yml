@@ -46,6 +46,8 @@ jobs:
       packages: read
 
     steps:
+    - uses: actions/checkout@v2
+
     - name: Create Sentry Release
       uses: getsentry/action-release@v1.1.6
       env:
