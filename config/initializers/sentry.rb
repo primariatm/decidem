@@ -4,6 +4,7 @@ Sentry.init do |config|
   config.dsn = ENV["SENTRY_BACKEND_DSN"]
   config.breadcrumbs_logger = [:active_support_logger, :http_logger]
   config.enabled_environments = %w[production]
+  config.capture_exception_frame_locals = true
 
   # Sanitize parameters before sending to Sentry
   filter = ActiveSupport::ParameterFilter.new(Rails.application.config.filter_parameters)
