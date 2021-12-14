@@ -5,7 +5,9 @@
     "@decidim/browserslist-config": "^0.25.0",
     "@decidim/core": "^0.25.0",
     "@decidim/elections": "^0.25.0",
-    "@decidim/webpacker": "^0.25.0"
+    "@decidim/webpacker": "^0.25.0",
+    "@sentry/browser": "^6.16.1",
+    "@sentry/tracing": "^6.16.1"
   },
   "version": "0.1.0",
   "babel": {
