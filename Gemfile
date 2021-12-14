@@ -43,8 +43,8 @@ group :development do
   gem "rubocop-performance", require: false
 end
 
-gem "sentry-ruby"
-gem "sentry-rails"
-gem "sentry-sidekiq"
+gem "sentry-ruby", "~> 4.8.1"
+gem "sentry-rails", "~> 4.8.1"
+gem "sentry-sidekiq", "~> 4.8.1"
 gem "dotenv"
 gem "dotenv-rails", groups: [:development, :test]
