@@ -45,5 +45,6 @@ end
 
 gem "sentry-ruby"
 gem "sentry-rails"
+gem "sentry-sidekiq"
 gem "dotenv"
 gem "dotenv-rails", groups: [:development, :test]
