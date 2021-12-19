@@ -6,7 +6,7 @@ ruby RUBY_VERSION
 
 DECIDIM_VERSION = { git: 'https://github.com/decidim/decidim.git', branch: 'release/0.25-stable' }
 
-gem "rails", "6.0.4.1"
+gem "rails", "~> 6.0.4.1"
 gem "decidim", DECIDIM_VERSION
 
 # gem "decidim-conferences", "0.25.0"
