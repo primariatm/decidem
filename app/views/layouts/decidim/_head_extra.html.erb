@@ -24,6 +24,7 @@
     --grey-dark: #4B4B4B;
     --grey-medium: #a1a1a2;
     --grey-light: #c7c8ca;
+    --white: #fff;
 
     /* Tertiary color -- yellow */
     --tertiary: #E1B500;
@@ -63,7 +64,7 @@
   }
   .main-nav__link a:hover {
     background: var(--primary-lightest) !important;
-    color: #FFF !important;
+    color: var(--white) !important;
   }
   .main-nav__link--active {
     background: var(--primary-light) !important;
@@ -71,7 +72,7 @@
   .main-nav__link--active a { font-weight: 600 !important; }
 
   .title-bar a:hover .navbar a:hover {
-    color: #FFFFFF !important;
+    color: var(--white) !important;
   }
 
   .hero::after { background: transparent !important; }
@@ -107,7 +108,7 @@
   }
 
   .header .navbar nav.main-nav li a.main-nav__link:hover {
-    color: #FFF;
+    color: var(--white);
   }
   
   .topbar__search .input-group {
@@ -120,7 +121,7 @@
     color: var(--grey-light) !important;
   }
   .topbar__search .input-group #term:focus {
-    color: #FFF !important;
+    color: var(--white) !important;
   }
   .topbar__search .input-group #term:focus::placeholder {
     color: rgba(255, 255, 255, 0.5) !important;
@@ -138,7 +139,7 @@
   }
 
   .main-footer a:hover, .mini-footer a:hover {
-    color: #FFFFFF !important;
+    color: var(--white) !important;
   }
   
   section.extended .home-section h2 {
@@ -160,6 +161,13 @@
     transform: translate3D(0, -5px, 0);
   }
 
+  a.floating-helper__content-close  {
+    color: var(--grey-light) !important;
+  }
+
+  a.floating-helper__content-close:hover {
+    color: var(--white) !important;
+  }
 </style>
 
 <% if Rails.env.production? %>
