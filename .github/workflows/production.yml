@@ -1,0 +1,80 @@
+name: Production build and deploy
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  IMAGE: ghcr.io/primariatm/decidem
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: whoan/docker-build-with-cache-action@v5
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ghcr.io
+          image_name: primariatm/decidem
+          image_tag: latest
+          push_git_tag: true
+          build_extra_args: "--build-arg UID=${{ secrets.UID }} --build-arg GID=${{ secrets.GID }}"
+
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    needs: build
+    permissions:
+      packages: read
+
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+        with:
+          path: decidim-app
+      - name: Sync app folders
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          port: ${{ secrets.DEPLOY_PORT }}
+          source: decidim-app
+          target: /home/decidem/app
+          overwrite: true
+          strip_components: 1
+      - name: Deploy app
+        uses: appleboy/ssh-action@master
+        timeout-minutes: 20
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: |
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            cd /home/decidem/app
+            docker-compose pull app
+            docker-compose up -d
+  sentry_release:
+    runs-on: ubuntu-latest
+    needs: deploy
+    permissions:
+      packages: read
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create Sentry Release
+        uses: getsentry/action-release@v1.1.6
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+        with:
+          environment: production
+          projects: ${{ secrets.SENTRY_BACKEND_PROJECT }} ${{ secrets.SENTRY_FRONTEND_PROJECT }}
