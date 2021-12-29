@@ -5,7 +5,8 @@
         "forceAllTransforms": true,
         "useBuiltIns": "entry",
         "corejs": 3,
-        "modules": false
+        "modules": false,
+        "loose": true
       }
     ],
     ["@babel/preset-react"]
