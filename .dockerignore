@@ -19,6 +19,7 @@
 /public/packs
 /public/packs-test
 /public/assets
+/storage
 
 /yarn-error.log
 /yarn-debug.log*
