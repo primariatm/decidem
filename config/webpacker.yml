@@ -12,6 +12,7 @@ default: &default
 
   additional_paths:
     - node_modules
+    - packages/webpacker/node_modules
     - app/packs
 
   # Reload manifest.json on all requests so we reload latest compiled packs
@@ -55,7 +56,7 @@ test:
   compile: true
   public_output_path: packs-test
 
-production:
+staging: &staging
   <<: *default
 
   # Production depends on precompilation of packs prior to booting for performance.
@@ -63,3 +64,6 @@ production:
 
   # Cache manifest.json for performance
   cache_manifest: true
+
+production:
+  <<: *staging

@@ -1,50 +1,27 @@
-version: "3"
+version: "3.8"
 services:
   app:
     image: ghcr.io/primariatm/decidem:latest
     user: "${UID}:${GID}"
-    restart: always
-    environment:
-      - PORT=3000
-      - RAILS_ENV=production
-      - RAILS_SERVE_STATIC_FILES=false
-      - REDIS_URL=redis://redis:6379/1
-      - DATABASE_URL=${DATABASE_URL}
-      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
-      - SMTP_DOMAIN=${SMTP_DOMAIN}
-      - SMTP_USERNAME=${SMTP_USERNAME}
-      - SMTP_PASSWORD=${SMTP_PASSWORD}
-      - SMTP_ADDRESS=${SMTP_ADDRESS}
-      - FROM_ADDRESS=${FROM_ADDRESS}
-      - SENTRY_BACKEND_DSN=${SENTRY_BACKEND_DSN}
-      - SENTRY_FRONTEND_DSN=${SENTRY_FRONTEND_DSN}
+    restart: unless-stopped
+    env_file: .env
     volumes:
       - logs:/app/log
       - storage:/app/storage
       - static-files:/app/public
     ports:
-      - 3000:3000
+      - "${PORT}:${PORT}"
     links:
       - redis
       - caddy
 
   worker:
     image: ghcr.io/primariatm/decidem:latest
-    environment:
-      - RAILS_ENV=production
-      - REDIS_URL=redis://redis:6379/1
-      - DATABASE_URL=${DATABASE_URL}
-      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
-      - SMTP_DOMAIN=${SMTP_DOMAIN}
-      - SMTP_USERNAME=${SMTP_USERNAME}
-      - SMTP_PASSWORD=${SMTP_PASSWORD}
-      - SMTP_ADDRESS=${SMTP_ADDRESS}
-      - FROM_ADDRESS=${FROM_ADDRESS}
-      - SENTRY_BACKEND_DSN=${SENTRY_BACKEND_DSN}
-      - SENTRY_FRONTEND_DSN=${SENTRY_FRONTEND_DSN}
+    env_file: .env
     volumes:
       - logs:/app/log
       - storage:/app/storage
+      - static-files:/app/public
     links:
       - redis
     command: bundle exec sidekiq -C config/sidekiq.yml
@@ -58,10 +35,9 @@ services:
     build:
       context: caddy
       dockerfile: Dockerfile
-    restart: always
+    restart: unless-stopped
     environment:
       DOMAIN_NAME: ${DOMAIN_NAME}
-      CLOUDFLARE_API_TOKEN: ${DOMAIN_NAME}
       PROXY_ADDRESS: app:3000
     ports:
       - "80:80"

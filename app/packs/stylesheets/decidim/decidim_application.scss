@@ -6,6 +6,138 @@
 //
 // By default this is empty.
 
+* {
+  font-family: $body-font-family;
+  transition: 0.25s linear;
+}
+
 .home-section {
   background-color: $light-gray;
+}
+
+.title-bar, .navbar {
+  background-color: $default-background-color;
+}
+
+.title-bar {
+  .topbar {
+    &__notifications,
+    &__conversations {
+      text-decoration: none;
+
+      & > .icon:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.hero::after { content: none; }
+
+.main-nav__link {
+  a:hover {
+    background: var(--primary-lightest);
+  }
+
+  &--active {
+    background: var(--primary-light);
+    font-weight: 600;
+  }
+}
+
+.hero__container {
+  .text-highlight.hero-heading {
+    text-align: right;
+    color: var(--primary);
+    text-shadow: none;
+    font-size: 4rem;
+
+    &::after {
+      content: '';
+      display: block;
+      height: 4rem;
+      width: 60%;
+    }
+  }
+
+  div.row div.columns.small-centered.large-10 {
+    width: 70%;
+  }
+
+  .row:nth-child(2) > div.columns.small-centered,
+  .row:first-child > div.columns.small-centered {
+    float: right;
+  }
+}
+
+
+#content {
+  a:not(.button):not(.floating-helper__content-close), .card__link {
+    color: var(--primary);
+  }
+
+  section.hero.home-section {
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: 35%;
+    background-color: transparent;
+  }
+}
+
+.topbar__search {
+  .input-group {
+    border: 1px solid var(--grey-light);
+    border-radius: 3px;
+    color: rgba(255, 255, 255, 0.5);
+
+    #term,
+    #submit {
+      background: transparent;
+      color: var(--grey-light);
+    }
+
+    #term:focus {
+      color: var(--white);
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.5)
+      }
+    }
+  }
+}
+
+.heading3 { font-weight: 700; }
+
+/* Footer */
+.main-footer,
+.mini-footer {
+  background-color: var(--dark-pmt);
+  color: var(--grey-light);
+
+  a {
+    color: var(--grey-light);
+
+    &:hover {
+      color: var(--white);
+    }
+  }
+}
+
+section.extended .home-section h2 {
+  font-weight: 800;
+}
+
+.dropdown.menu .menu.is-dropdown-submenu li.is-submenu-item a,
+.language-choose .menu.is-dropdown-submenu > li a {
+  color: var(--primary);
+}
+
+/* Extra */
+
+.card.card--mini {
+  transition: 0.25s ease-in-out;
+
+  &:hover {
+    transform: translate3D(0, -5px, 0);
+  }
 }

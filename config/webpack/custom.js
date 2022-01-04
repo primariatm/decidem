@@ -1,6 +1,3 @@
-/* eslint-disable */
-
-const path = require("path");
 const { config } = require("@rails/webpacker");
 
 module.exports = {

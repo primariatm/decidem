@@ -6,9 +6,55 @@
 //
 // By default this is empty.
 
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,400;0,500;0,600;0,700;1,400;1,600&display=swap');
 
-$open-sans: 'Open Sans', sans-serif;
+/* Variables */
+:root {
+  /* Main blue */
+  --primary: #003995;
+  --primary-lightest: #0665FB;
+  --primary-light: #004AC0;
+  --primary-dark: #002E77;
+  --primary-darkest: #002258;
 
-$body-font-family: $open-sans;
-$header-font-family: $open-sans;
+
+  /* Secondary blue */
+  --secondary: #1A009C;
+  --secondary-lightest: #3108FC;
+  --secondary-light: #2100C6;
+  --secondary-dark: #15007D;
+  --secondary-darkest: #0F005C;
+
+  /* Other */
+  --dark-pmt: #111111;
+  --grey-dark: #4B4B4B;
+  --grey-medium: #a1a1a2;
+  --grey-light: #c7c8ca;
+  --white: #fff;
+
+  /* Tertiary color -- yellow */
+  --tertiary: #E1B500;
+  --tertiary-lightest: #FFCD00;
+  --tertiary-light: #FFCD00;
+  --tertiary-dark: #B49100;
+  --tertiary-darkest: #846A00;
+
+  /* Complementary -- orange */
+  --complementary: #E18F00;
+  --complementary-lightest: #FFA200;
+  --complementary-light: #FFA200;
+  --complementary-dark: #B47300;
+  --complementary-darkest: #845400;
+}
+
+$ibm-plex-sans: 'IBM Plex Sans', sans-serif;
+$default-background-color: var(--primary);
+$default-text-color: var(--grey-light);
+
+$body-font-family: $ibm-plex-sans;
+$header-font-family: $ibm-plex-sans;
+$titlebar-background: $default-background-color;
+$titlebar-color: $default-text-color;
+$anchor-color-hover: var(--white);
+$navbar-bg-hover: var(--primary-lightest);
+$dropdown-menu-item-color-active: var(--white);
