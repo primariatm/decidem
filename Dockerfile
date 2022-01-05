@@ -30,6 +30,7 @@ RUN bundle install -j 4
 RUN yarn install && yarn cache clean --force
 RUN bundle exec rails webpacker:compile
 
+RUN mkdir storage
 RUN chown -R decidem:decidem $app
 USER $UID
 

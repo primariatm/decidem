@@ -6,9 +6,8 @@ services:
     restart: unless-stopped
     env_file: .env
     volumes:
-      - logs:/app/log
-      - storage:/app/storage
-      - static-files:/app/public
+      - logs:/home/decidem/app/log
+      - storage:/home/decidem/app/storage
     ports:
       - "${PORT}:${PORT}"
     links:
@@ -19,9 +18,8 @@ services:
     image: ghcr.io/primariatm/decidem:latest
     env_file: .env
     volumes:
-      - logs:/app/log
-      - storage:/app/storage
-      - static-files:/app/public
+      - logs:/home/decidem/app/log
+      - storage:/home/decidem/app/storage
     links:
       - redis
     command: bundle exec sidekiq -C config/sidekiq.yml
@@ -44,7 +42,6 @@ services:
       - "443:443"
     volumes:
       - storage:/app/storage
-      - static-files:/srv
       - caddy-data:/data
       - caddy-config:/config
 
