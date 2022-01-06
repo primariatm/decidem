@@ -13,10 +13,15 @@
 
 .home-section {
   background-color: $light-gray;
+
+  .card-grid .card__link {
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
 }
 
-.title-bar, .navbar {
-  background-color: $default-background-color;
+.navbar {
+  background-color: var(--primary);
 }
 
 .title-bar {
@@ -35,8 +40,13 @@
 .hero::after { content: none; }
 
 .main-nav__link {
-  a:hover {
-    background: var(--primary-lightest);
+  a {
+    box-shadow: none;
+    color: var(--white);
+
+    &:hover {
+      background: var(--primary-lightest);
+    }
   }
 
   &--active {
@@ -47,10 +57,11 @@
 
 .hero__container {
   .text-highlight.hero-heading {
+    @include font-size(4);
+
     text-align: right;
     color: var(--primary);
     text-shadow: none;
-    font-size: 4rem;
 
     &::after {
       content: '';
@@ -72,7 +83,12 @@
 
 
 #content {
-  a:not(.button):not(.floating-helper__content-close), .card__link {
+  .card__content > .card__link {
+    color: var(--white);
+  }
+
+  a:not(.button):not(.floating-helper__content-close),
+  .card__header > .card__link {
     color: var(--primary);
   }
 
@@ -86,21 +102,20 @@
 
 .topbar__search {
   .input-group {
-    border: 1px solid var(--grey-light);
-    border-radius: 3px;
-    color: rgba(255, 255, 255, 0.5);
+    @include border($default-border-color);
+    color: $text-color;
 
     #term,
     #submit {
       background: transparent;
-      color: var(--grey-light);
+      color: $text-color;
     }
 
     #term:focus {
       color: var(--white);
 
       &::placeholder {
-        color: rgba(255, 255, 255, 0.5)
+        color: $placeholder-color;
       }
     }
   }
@@ -112,13 +127,13 @@
 .main-footer,
 .mini-footer {
   background-color: var(--dark-pmt);
-  color: var(--grey-light);
+  color: $text-color;
 
   a {
-    color: var(--grey-light);
+    color: $text-color;
 
     &:hover {
-      color: var(--white);
+      color: $white;
     }
   }
 }
@@ -134,10 +149,124 @@ section.extended .home-section h2 {
 
 /* Extra */
 
-.card.card--mini {
-  transition: 0.25s ease-in-out;
+.card {
+  &-grid {
+    .card--mini {
+      background: $background-color;
+    }
+  }
 
-  &:hover {
-    transform: translate3D(0, -5px, 0);
+  &.card--mini {
+    transition: 0.25s ease-in-out;
+
+    &:hover {
+      transform: translate3D(0, -5px, 0);
+    }
+  }
+
+  &--process {
+    &__row {
+      & > .card--process__column:nth-child(2) {
+        background-color: $background-color;
+      }
+    }
+
+    .card--full__image {
+      background-size: contain;
+      right: 0;
+    }
+  }
+
+  &__status {
+    .card-data {
+      &__item {
+        .follow-button {
+          & > .text-wrap {
+            @include font-size(1);
+            @include border(var(--primary));
+
+            padding: spacer(1) spacer(2);
+            margin-left: spacer(2);
+            text-transform: none;
+
+            &:hover {
+              color: var(--white);
+              background-color: $background-color;
+            }
+          }
+        }
+      }
+    }
   }
 }
+
+.omnipresent-banner {
+  @include font-size(1);
+
+  background-color: var(--tertiary);
+  padding: spacer(2);
+
+  a { color: transparent }
+  span { color: var(--primary) }
+
+  .omnipresent-banner-title {
+    margin-right: 0;
+    pointer-events: none;
+    cursor: default
+  }
+
+  &-short-description {
+    @include border(var(--primary));
+    @include font-size(1);
+
+    padding: spacer(1) spacer(2);
+    font-weight: bold;
+
+    &:hover {
+      border-color: var(--primary);
+      background-color: $background-color;
+      color: var(--white);
+    }
+  }
+}
+
+.button--sc {
+  @include border(var(--white));
+
+  text-transform: none;
+}
+
+.hide-for-medium {
+  & > .navbar > .column {
+    padding: 0;
+  }
+}
+
+@media print, screen and (max-width: 40em) {
+  .title-bar { border: none }
+
+  .topbar {
+    &__menu > [data-toggle] {
+      margin: 0;
+    }
+
+    &__user__login a {
+      color: var(--white);
+    }
+
+    &__edit__link {
+      margin-left: spacer(2);
+    }
+  }
+}
+
+.card--process__column .button--sc span[aria-hidden=true],
+.home-section .card-grid .card--mini .card__image-top,
+.main-footer .column > nav > ul > li:nth-child(2),
+#highlighted-assemblies .button--sc,
+#participatory-space-filters,
+#process-nav-content .process-nav__more,
+#assemblies-chart {
+  display: none
+}
+

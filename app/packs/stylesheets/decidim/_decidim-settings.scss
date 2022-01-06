@@ -5,13 +5,19 @@
 // To override styles use decidim_application.scss
 //
 // By default this is empty.
+@use "sass:math";
 
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,400;0,500;0,600;0,700;1,400;1,600&display=swap');
 
-/* Variables */
+$ibm-plex-sans: 'IBM Plex Sans', sans-serif;
+
+// Decidim overrides
+$primary: #003995;
+$secondary: #1A009C;
+
 :root {
   /* Main blue */
-  --primary: #003995;
+  --primary: #{$primary};
   --primary-lightest: #0665FB;
   --primary-light: #004AC0;
   --primary-dark: #002E77;
@@ -19,7 +25,7 @@
 
 
   /* Secondary blue */
-  --secondary: #1A009C;
+  --secondary: #{$secondary};
   --secondary-lightest: #3108FC;
   --secondary-light: #2100C6;
   --secondary-dark: #15007D;
@@ -33,7 +39,7 @@
   --white: #fff;
 
   /* Tertiary color -- yellow */
-  --tertiary: #E1B500;
+  --tertiary: #FCD34C;
   --tertiary-lightest: #FFCD00;
   --tertiary-light: #FFCD00;
   --tertiary-dark: #B49100;
@@ -47,14 +53,35 @@
   --complementary-darkest: #845400;
 }
 
-$ibm-plex-sans: 'IBM Plex Sans', sans-serif;
-$default-background-color: var(--primary);
-$default-text-color: var(--grey-light);
-
-$body-font-family: $ibm-plex-sans;
-$header-font-family: $ibm-plex-sans;
-$titlebar-background: $default-background-color;
-$titlebar-color: $default-text-color;
 $anchor-color-hover: var(--white);
-$navbar-bg-hover: var(--primary-lightest);
+$background-color: var(--primary);
+$body-font-family: $ibm-plex-sans;
+$default-text-color: var(--grey-light);
 $dropdown-menu-item-color-active: var(--white);
+$header-font-family: $ibm-plex-sans;
+$navbar-active-color: var(--white);
+$navbar-color-hover: var(--white);
+$placeholder-color: var(--grey-medium);
+$text-color: var(--grey-light);
+$titlebar-background: $background-color;
+$titlebar-color: $text-color;
+
+$spacers: (0.25rem, 0.5rem, 0.75rem, 1rem);
+$font-sizes: (0.75rem, 1rem, 2.5rem, 4rem);
+$line-heights: (1.2, 1.3, 1.5, 1.3, 1.3, 1.2);
+$border-size: math.div(1rem, 16);
+$default-border-color: var(--grey-light);
+
+@mixin font-size($index) {
+  font-size: nth($font-sizes, $index);
+  line-height: nth($line-heights, $index);
+}
+
+@mixin border($color) {
+  border: solid $border-size $color;
+  border-radius: 0.25rem;
+}
+
+@function spacer($index) {
+  @return nth($spacers, $index);
+}
