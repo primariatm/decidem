@@ -16,6 +16,7 @@ services:
 
   worker:
     image: ghcr.io/primariatm/decidem:latest
+    restart: unless-stopped
     env_file: .env
     volumes:
       - logs:/home/decidem/app/log
