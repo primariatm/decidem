@@ -26,15 +26,23 @@ jobs:
       with:
         cache: 'yarn'
     - run: yarn install
-    - uses: whoan/docker-build-with-cache-action@v5
-      with:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-        registry: ghcr.io
-        image_name: primariatm/decidem
-        image_tag: latest
-        push_git_tag: true
-        build_extra_args: "--build-arg UID=${{ secrets.UID }} --build-arg GID=${{ secrets.GID }} --build-arg RAILS_ENV=staging"
+    - name: Build the Docker image
+      env:
+        DOCKER_BUILDKIT: 1
+      run: |
+        docker build . \
+        --build-arg UID=${{ secrets.UID }} \
+        --build-arg GID=${{ secrets.GID }} \
+        --build-arg RAILS_ENV=staging \
+        --tag ${IMAGE}:$(date "+%d%m%y_%H%M") \
+        --tag ${IMAGE}:${{ github.sha }} \
+        --tag ${IMAGE}:latest
+    - name: Log in to registry
+      run: |
+        echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+    - name: Push the Docker image
+      run: |
+        docker push ${IMAGE} --all-tags
 
   deploy:
     runs-on: ubuntu-latest
