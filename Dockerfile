@@ -31,7 +31,8 @@ COPY . $app
 # Install gems
 RUN bundle config --global frozen 1 \
     && bundle config set --local without 'development test' \
-    && bundle install --jobs 4 --retry 3 \
+    && bundle config set --local path vendor/bundle \
+    && bundle install --jobs 20 --retry 3 \
     # Remove unneeded files (cached *.gem, *.o, *.c) \
     && rm -rf /usr/local/bundle/cache/*.gem \
     && find /usr/local/bundle/gems/ -name "*.c" -delete \
