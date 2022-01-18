@@ -17,6 +17,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          cache-version: 1
+      - uses: actions/setup-node@v2
+        with:
+          cache: 'yarn'
+      - run: yarn install
       - uses: whoan/docker-build-with-cache-action@v5
         with:
           username: ${{ github.actor }}
@@ -25,7 +33,7 @@ jobs:
           image_name: primariatm/decidem
           image_tag: latest
           push_git_tag: true
-          build_extra_args: "--build-arg UID=${{ secrets.UID }} --build-arg GID=${{ secrets.GID }}"
+          build_extra_args: "--build-arg UID=${{ secrets.UID }} --build-arg GID=${{ secrets.GID }} --build-arg RAILS_ENV=production"
 
   deploy:
     runs-on: ubuntu-latest
