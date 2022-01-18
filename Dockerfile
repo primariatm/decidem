@@ -26,7 +26,7 @@ RUN mkdir $app
 WORKDIR $app
 COPY . $app
 
-RUN bundle install --jobs=4 --retry=3
+RUN bundle install --jobs 4 --retry 3 --path vendor/bundle
 RUN yarn install && yarn cache clean --force
 RUN bundle exec rails webpacker:compile
 

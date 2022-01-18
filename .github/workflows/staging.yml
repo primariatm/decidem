@@ -18,6 +18,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
     - uses: whoan/docker-build-with-cache-action@v5
       with:
         username: ${{ github.actor }}

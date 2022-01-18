@@ -12,7 +12,6 @@
 /config/master.key
 
 /.bundle
-/vendor/bundle
 
 /node_modules/
 
