@@ -1,4 +1,4 @@
-FROM ruby:2.7.4-bullseye
+FROM ruby:2.7.4-alpine
 
 ARG UID
 ARG GID
@@ -9,24 +9,24 @@ ENV LC_ALL C.UTF-8
 ENV BUNDLER_VERSION 2.2.18
 ENV NODE_VERSION 16.9.1
 
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
-RUN apt update -y
-RUN apt install -y nodejs autoconf bison build-essential imagemagick libicu-dev libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm-dev
-RUN npm install -g yarn n
+RUN apk add --update postgresql-dev tzdata build-base autoconf bison imagemagick bash git npm
+RUN apk --no-cache add nodejs-current yarn --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community
+
+RUN npm install -g n
 RUN n $NODE_VERSION
 
 RUN echo 'gem: --no-rdoc --no-ri' >> "/etc/gemrc"
 RUN gem install bundler --version $BUNDLER_VERSION
 
 RUN addgroup --gid $GID decidem
-RUN adduser --disabled-password --gecos '' --uid $UID --gid $GID decidem
+RUN adduser -D -g '' -u $UID -G decidem decidem
 
 ENV app /home/decidem/app
 RUN mkdir $app
 WORKDIR $app
 COPY . $app
 
-RUN bundle install -j 4
+RUN bundle install --jobs=4 --retry=3
 RUN yarn install && yarn cache clean --force
 RUN bundle exec rails webpacker:compile
 
