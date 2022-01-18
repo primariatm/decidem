@@ -1,38 +1,85 @@
-FROM ruby:2.7.4-alpine
+######################
+# Stage: Builder
+FROM ruby:2.7.4-alpine as builder
 
-ARG UID
 ARG GID
+ARG UID
+ARG RAILS_ENV
 
-ENV LANG C.UTF-8
-ENV LC_ALL C.UTF-8
-
-ENV BUNDLER_VERSION 2.2.18
-ENV NODE_VERSION 16.9.1
-
-RUN apk add --update postgresql-dev tzdata build-base autoconf bison imagemagick bash git npm
+RUN apk add --update --no-cache \
+    build-base \
+    postgresql-dev \
+    git \
+    npm \
+    bash \
+    yarn \
+    imagemagick \
+    tzdata
 RUN apk --no-cache add nodejs-current yarn --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community
 
-RUN npm install -g n
-RUN n $NODE_VERSION
-
+ENV BUNDLER_VERSION 2.2.18
 RUN echo 'gem: --no-rdoc --no-ri' >> "/etc/gemrc"
 RUN gem install bundler --version $BUNDLER_VERSION
 
-RUN addgroup --gid $GID decidem
-RUN adduser -D -g '' -u $UID -G decidem decidem
+RUN addgroup --gid $GID decidem && adduser -D -g '' -u $UID -G decidem decidem
 
 ENV app /home/decidem/app
-RUN mkdir $app
+
 WORKDIR $app
 COPY . $app
 
-RUN bundle install --jobs 4 --retry 3 --path vendor/bundle
-RUN yarn install && yarn cache clean --force
-RUN bundle exec rails webpacker:compile
+# Install gems
+RUN bundle config --global frozen 1 \
+    && bundle config set --local without 'development test' \
+    && bundle install --jobs 4 --retry 3 \
+    # Remove unneeded files (cached *.gem, *.o, *.c) \
+    && rm -rf /usr/local/bundle/cache/*.gem \
+    && find /usr/local/bundle/gems/ -name "*.c" -delete \
+    && find /usr/local/bundle/gems/ -name "*.o" -delete
 
-RUN mkdir storage
-RUN chown -R decidem:decidem $app
-USER $UID
+RUN yarn install
+RUN RAILS_ENV=$RAILS_ENV SECRET_KEY_BASE=foo bundle exec rails webpacker:compile
+
+# Remove folders not needed in resulting image
+RUN rm -rf node_modules tmp/cache
+
+###############################
+# Stage wkhtmltopdf
+FROM madnight/docker-alpine-wkhtmltopdf as wkhtmltopdf
+
+###############################
+# Stage Final
+FROM ruby:2.7.4-alpine
+
+ARG GID
+ARG UID
+
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+ENV app /home/decidem/app
+
+# Add Alpine packages
+RUN apk add --update --no-cache \
+    postgresql-client \
+    imagemagick \
+    tzdata \
+    file \
+    bash \
+    # needed for wkhtmltopdf
+    libressl3.3-libcrypto \
+    ttf-dejavu ttf-droid ttf-freefont ttf-liberation
+
+# Copy wkhtmltopdf from former build stage
+COPY --from=wkhtmltopdf /bin/wkhtmltopdf /bin/
+
+RUN addgroup --gid $GID decidem && adduser -D -g '' -u $UID -G decidem decidem
+USER decidem
+
+# Copy app with gems from former build stage
+COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
+COPY --from=builder --chown=decidem:decidem /home/decidem/app $app
+
+WORKDIR $app
 
 EXPOSE 3000
 
