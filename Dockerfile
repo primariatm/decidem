@@ -85,9 +85,6 @@ COPY --from=builder --chown=decidem:decidem /home/decidem/app $app
 
 WORKDIR $app
 
-# Update the crontab
-RUN bundle exec whenever --update-crontab --set environment=$RAILS_ENV
-
 EXPOSE 3000
 
 ENTRYPOINT []

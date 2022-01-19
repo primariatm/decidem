@@ -78,6 +78,7 @@ jobs:
             cd /home/decidem/app
             docker-compose pull app
             docker-compose up -d
+            docker exec -d -w /home/decidem/app app_app_1 bundle exec whenever --update-crontab --set environment=production
   sentry_release:
     runs-on: ubuntu-latest
     needs: deploy
