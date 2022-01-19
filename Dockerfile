@@ -66,6 +66,9 @@ RUN apk add --update --no-cache \
     tzdata \
     file \
     bash \
+    # needed for whenever cron jobs
+    busybox-initscripts \
+    busybox-suid \
     # needed for wkhtmltopdf
     libressl3.3-libcrypto \
     ttf-dejavu ttf-droid ttf-freefont ttf-liberation
@@ -81,6 +84,9 @@ COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
 COPY --from=builder --chown=decidem:decidem /home/decidem/app $app
 
 WORKDIR $app
+
+# Update the crontab
+RUN bundle exec whenever --update-crontab
 
 EXPOSE 3000
 
