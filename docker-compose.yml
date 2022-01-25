@@ -37,6 +37,7 @@ services:
     restart: unless-stopped
     environment:
       DOMAIN_NAME: ${DOMAIN_NAME}
+      DECIDEM_NEXT_HOST: ${DECIDEM_NEXT_HOST}
       PROXY_ADDRESS: app:3000
     ports:
       - "80:80"
@@ -45,11 +46,13 @@ services:
       - storage:/app/storage
       - caddy-data:/data
       - caddy-config:/config
+      - $PWD/caddy/Caddyfile:/etc/caddy/Caddyfile
 
 volumes:
   storage: {}
   logs: {}
   static-files: {}
   redis-data: {}
-  caddy-data: {}
+  caddy-data:
+    external: true
   caddy-config: {}

@@ -4,5 +4,13 @@
 
 {$DOMAIN_NAME:localhost} {
   header -Server
-  reverse_proxy {$PROXY_ADDRESS}
+  handle /bp* {
+    reverse_proxy https://{$DECIDEM_NEXT_HOST} {
+      header_up Host {$DECIDEM_NEXT_HOST}
+    }
+  }
+
+  handle {
+    reverse_proxy {$PROXY_ADDRESS}
+  }
 }
