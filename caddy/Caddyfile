@@ -10,6 +10,12 @@
     }
   }
 
+  handle /_next* {
+    reverse_proxy https://{$DECIDEM_NEXT_HOST} {
+      header_up Host {$DECIDEM_NEXT_HOST}
+    }
+  }
+
   handle {
     reverse_proxy {$PROXY_ADDRESS}
   }
