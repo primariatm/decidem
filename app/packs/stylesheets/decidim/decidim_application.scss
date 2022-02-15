@@ -83,8 +83,11 @@
 
 
 main {
-  a:not(.button):hover {
-    color: var(--primary);
+  a:not(.button) {
+    &:focus,
+    &:hover {
+      color: var(--primary);
+    }
   }
 
   section.hero.home-section {
