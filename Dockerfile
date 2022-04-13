@@ -10,12 +10,11 @@ RUN apk add --update --no-cache \
     build-base \
     postgresql-dev \
     git \
-    npm \
+    nodejs \
     bash \
     yarn \
     imagemagick \
     tzdata
-RUN apk --no-cache add nodejs-current yarn --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community
 
 ENV BUNDLER_VERSION 2.2.18
 RUN echo 'gem: --no-rdoc --no-ri' >> "/etc/gemrc"
@@ -38,7 +37,7 @@ RUN bundle config --global frozen 1 \
     && find /usr/local/bundle/gems/ -name "*.c" -delete \
     && find /usr/local/bundle/gems/ -name "*.o" -delete
 
-RUN yarn install
+RUN yarn install --ignore-engines
 RUN RAILS_ENV=$RAILS_ENV SECRET_KEY_BASE=foo bundle exec rails webpacker:compile
 
 # Remove folders not needed in resulting image
