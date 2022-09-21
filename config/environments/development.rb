@@ -62,4 +62,6 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.hosts << "decidem.test"
+
+  config.i18n.fallbacks = true
 end

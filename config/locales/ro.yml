@@ -6,3 +6,9 @@ ro:
           one: Imagine
           few: Imagini
           other: Imagini
+    accessibility:
+      front_page_link: Link
+    pages:
+      home:
+        hero:
+          participate_title: Titlu
