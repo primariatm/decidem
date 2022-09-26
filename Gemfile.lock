@@ -362,7 +362,7 @@ GEM
     erbse (0.1.4)
       temple
     erubi (1.11.0)
-    excon (0.92.4)
+    excon (0.92.5)
     execjs (2.8.1)
     factory_bot (4.11.1)
       activesupport (>= 3.0.0)
@@ -547,7 +547,7 @@ GEM
       rack (>= 1.0, < 3)
     rack-cors (1.1.1)
       rack (>= 2.0.0)
-    rack-protection (2.2.2)
+    rack-protection (3.0.1)
       rack
     rack-proxy (0.7.4)
       rack
@@ -701,9 +701,9 @@ GEM
       simplecov (~> 0.8)
     simplecov-html (0.12.3)
     smart_properties (1.17.0)
-    snaky_hash (2.0.0)
+    snaky_hash (2.0.1)
       hashie
-      version_gem (~> 1.1)
+      version_gem (~> 1.1, >= 1.1.1)
     social-share-button (1.2.4)
       coffee-rails
     spring (2.1.1)
