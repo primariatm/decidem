@@ -1,0 +1,8 @@
+ro:
+  decidim:
+    application:
+      collection:
+        photos:
+          one: Imagine
+          few: Imagini
+          other: Imagini
