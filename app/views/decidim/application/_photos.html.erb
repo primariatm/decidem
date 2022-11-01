@@ -1,0 +1,13 @@
+<% if photos.any? %>
+  <div class="section images">
+    <h3 class="section-heading"><%= t("decidim.application.photos.related_photos") %></h3>
+    <% if (photos_without_collection = photos.reject(&:attachment_collection_id?)).any? %>
+      <div class="card card--list">
+        <%= render partial: "decidim/application/photo_gallery.html", locals: { photos: photos_without_collection } %>
+      </div>
+    <% end %>
+    <% photos.select(&:attachment_collection_id?).group_by(&:attachment_collection).sort_by { |c, d| c.weight }.each do |collection, photos| %>
+      <%= render partial: "decidim/application/photos_collection.html", locals: { attachment_collection: collection, photos: photos } %>
+    <% end %>
+  </div>
+<% end %>
