@@ -19,3 +19,7 @@ ro:
       participatory_processes:
         show:
           title: Titlu
+    assemblies:
+      assemblies:
+        show:
+          title: Titlu

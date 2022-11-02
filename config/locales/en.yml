@@ -19,3 +19,7 @@ en:
       participatory_processes:
         show:
           title: Title
+    assemblies:
+      assemblies:
+        show:
+          title: Title
