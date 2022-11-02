@@ -1,8 +1,45 @@
+---
 en:
   decidim:
+    accessibility:
+      front_page_link: Link
     application:
       collection:
         photos:
-          one: Image
           few: Images
+          one: Image
           other: Images
+      photos:
+        related_photos: Related photos
+    assemblies:
+      assemblies:
+        show:
+          title: Title
+    budgets:
+      projects:
+        budget_excess:
+          budget_excess:
+            description: Description
+    meetings:
+      meetings:
+        filters:
+          type_values:
+            hybrid: Hybrid
+      models:
+        meeting:
+          fields:
+            id: ID
+    moderations:
+      models:
+        moderation:
+          fields:
+            id: ID
+            reportable_id: Reportable ID
+    pages:
+      home:
+        hero:
+          participate_title: Title
+    participatory_processes:
+      participatory_processes:
+        show:
+          title: Title
