@@ -11,15 +11,35 @@ ro:
           other: Imagini
       photos:
         related_photos: Related photos
+    assemblies:
+      assemblies:
+        show:
+          title: Titlu
+    budgets:
+      projects:
+        budget_excess:
+          budget_excess:
+            description: Descriere
+    meetings:
+      meetings:
+        filters:
+          type_values:
+            hybrid: Hibrid
+      models:
+        meeting:
+          fields:
+            id: ID
+    moderations:
+      models:
+        moderation:
+          fields:
+            id: ID
+            reportable_id: ID Raport
     pages:
       home:
         hero:
           participate_title: Titlu
     participatory_processes:
       participatory_processes:
-        show:
-          title: Titlu
-    assemblies:
-      assemblies:
         show:
           title: Titlu
