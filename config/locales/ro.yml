@@ -1,14 +1,21 @@
+---
 ro:
   decidim:
+    accessibility:
+      front_page_link: Link
     application:
       collection:
         photos:
-          one: Imagine
           few: Imagini
+          one: Imagine
           other: Imagini
-    accessibility:
-      front_page_link: Link
+      photos:
+        related_photos: Related photos
     pages:
       home:
         hero:
           participate_title: Titlu
+    participatory_processes:
+      participatory_processes:
+        show:
+          title: Titlu

@@ -1,8 +1,21 @@
+---
 en:
   decidim:
+    accessibility:
+      front_page_link: Link
     application:
       collection:
         photos:
-          one: Image
           few: Images
+          one: Image
           other: Images
+      photos:
+        related_photos: Related photos
+    pages:
+      home:
+        hero:
+          participate_title: Title
+    participatory_processes:
+      participatory_processes:
+        show:
+          title: Title
