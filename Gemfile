@@ -27,6 +27,8 @@ gem "wicked_pdf", "~> 2.1"
 
 gem 'whenever', require: false
 
+gem "rack-attack"
+
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
 
