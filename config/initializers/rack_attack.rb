@@ -33,26 +33,30 @@ module Rack
       throttle("req/ip/#{level}", limit: (20 * level), period: (8**level).seconds, &:ip)
     end
 
-    # Split on a comma with 0 or more spaces after it.
-    # E.g. ENV['SPAMMERS_IP_BLACKLIST'] = "172.0.0.1, 10.20.3.1"
-    # spammer_ips = ["172.0.0.1", "10.20.3.1"]
-    spammer_ips = ENV['SPAMMERS_IP_BLACKLIST'].split(/,\s*/)
+    if ENV['SPAMMERS_IP_BLACKLIST'].present?
+      # Split on a comma with 0 or more spaces after it.
+      # E.g. ENV['SPAMMERS_IP_BLACKLIST'] = "172.0.0.1, 10.20.3.1"
+      # spammer_ips = ["172.0.0.1", "10.20.3.1"]
+      spammer_ips = ENV['SPAMMERS_IP_BLACKLIST'].split(/,\s*/)
 
-    # Turn spammers array into a regexp
-    spammer_ips_regexp = Regexp.union(spammer_ips) # /172\.0\.0\.1|10\.20\.3\.1/
-    blocklist("block ip spam") do |request|
-      request.ip =~ spammer_ips_regexp
+      # Turn spammers array into a regexp
+      spammer_ips_regexp = Regexp.union(spammer_ips) # /172\.0\.0\.1|10\.20\.3\.1/
+      blocklist("block ip spam") do |request|
+        request.ip =~ spammer_ips_regexp
+      end
     end
 
-    # Split on a comma with 0 or more spaces after it.
-    # E.g. ENV['SPAMMERS_REFERER_BLACKLIST'] = "foo.com, bar.com"
-    # spammers = ["foo.com", "bar.com"]
-    spammer_referers = ENV['SPAMMERS_REFERER_BLACKLIST'].split(/,\s*/)
+    if ENV['SPAMMERS_REFERER_BLACKLIST'].present?
+      # Split on a comma with 0 or more spaces after it.
+      # E.g. ENV['SPAMMERS_REFERER_BLACKLIST'] = "foo.com, bar.com"
+      # spammers = ["foo.com", "bar.com"]
+      spammer_referers = ENV['SPAMMERS_REFERER_BLACKLIST'].split(/,\s*/)
 
-    # Turn spammers array into a regexp
-    spammer_referers_regexp = Regexp.union(spammer_referers) # /foo\.com|bar\.com/
-    blocklist("block referrer spam") do |request|
-      request.referrer =~ spammer_referers_regexp
+      # Turn spammers array into a regexp
+      spammer_referers_regexp = Regexp.union(spammer_referers) # /foo\.com|bar\.com/
+      blocklist("block referrer spam") do |request|
+        request.referrer =~ spammer_referers_regexp
+      end
     end
 
     ### Prevent Brute-Force Login Attacks ###
