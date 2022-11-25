@@ -5,6 +5,14 @@ Sentry.init do |config|
   config.breadcrumbs_logger = [:active_support_logger, :http_logger]
   config.enabled_environments = %w[staging production]
   config.capture_exception_frame_locals = true
+  config.excluded_exceptions = %w[ActionController::InvalidCrossOriginRequest
+                                  ActionController::MethodNotAllowed
+                                  ActionController::NotImplemented
+                                  ActionController::UnknownAction
+                                  ActionController::UnknownFormat
+                                  ActionDispatch::Http::MimeNegotiation::InvalidType
+                                  ActionController::UnknownHttpMethod
+                                  ActionDispatch::Http::Parameters::ParseError]
 
   # Sanitize parameters before sending to Sentry
   filter = ActiveSupport::ParameterFilter.new(Rails.application.config.filter_parameters)
