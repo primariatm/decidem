@@ -29,9 +29,9 @@ module Rack
     #        40 requests in 64 seconds
     #        ...
     #        100 requests in 0.38 days (~250 requests/day)
-    (1..5).each do |level|
-      throttle("req/ip/#{level}", limit: (20 * level), period: (8**level).seconds, &:ip)
-    end
+    #(1..5).each do |level|
+    #  throttle("req/ip/#{level}", limit: (20 * level), period: (8**level).seconds, &:ip)
+    #end
 
     if ENV['SPAMMERS_IP_BLACKLIST'].present?
       # Split on a comma with 0 or more spaces after it.
