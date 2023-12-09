@@ -24,6 +24,7 @@ jobs:
         cache-version: 1
     - uses: actions/setup-node@v2
       with:
+        version: '16.9.1'
         cache: 'yarn'
     - run: yarn install
     - name: Build the Docker image
