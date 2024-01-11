@@ -1,13 +1,15 @@
 :concurrency: 5
 :queues:
   - [critical, 2]
+  - block_user
   - default
+  - exports
+  - events
+  - high
   - low
   - mailers
-  - exports
-  - block_user
-  - events
-  - translations
   - metrics
+  - newsletter
   - newsletters_opt_in
+  - translations
   - user_report
